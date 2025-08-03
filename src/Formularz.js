@@ -2,12 +2,8 @@ import React, { useState } from "react";
 import { db, storage } from "./firebase";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
-
-
-
-function App() {
+function Formularz() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
   const [imageFile, setImageFile] = useState(null);
@@ -50,7 +46,6 @@ function App() {
   };
 
   return (
-    
     <div className="min-h-screen bg-pink-50 flex items-center justify-center">
       <div className="bg-white shadow-xl rounded-2xl p-8 w-full max-w-md">
         <h1 className="text-2xl font-bold text-center mb-6 text-pink-700">
@@ -83,19 +78,29 @@ function App() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
               Zrób selfie (opcjonalnie):
             </label>
-            <input
-              type="file"
-              accept="image/*"
-              capture="user"
-              onChange={(e) => setImageFile(e.target.files[0])}
-              className="mt-1"
-            />
-            <p className="text-xs text-gray-500 mt-1">
-              Otworzy się aparat na telefonie.
-            </p>
+
+            <div className="flex items-center gap-2">
+              <label
+                htmlFor="upload"
+                className="cursor-pointer inline-flex items-center gap-2 bg-pink-600 hover:bg-pink-700 text-white px-4 py-2 rounded-md transition"
+              >
+                📸 Zrób zdjęcie
+              </label>
+              <input
+                id="upload"
+                type="file"
+                accept="image/*"
+                capture="user"
+                onChange={(e) => setImageFile(e.target.files[0])}
+                className="hidden"
+              />
+              {imageFile && (
+                <span className="text-sm text-green-600">✅ Dodano</span>
+              )}
+            </div>
           </div>
 
           <button
@@ -114,4 +119,4 @@ function App() {
   );
 }
 
-export default App;
+export default Formularz;
